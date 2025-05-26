@@ -1,0 +1,62 @@
+name: WeatherApp
+
+options:
+  groupSortPosition: top
+  generateEmptyDirectories: true
+  createIntermediateGroups: true
+  developmentLanguage: en
+
+configs:
+  Debug: debug
+  Release: release
+
+targets:
+  WeatherApp:
+    type: application
+    platform: iOS
+    deploymentTarget: "15.0"
+    sources:
+      - WeatherApp
+    scheme: {}
+    settings:
+        base:
+            TARGETED_DEVICE_FAMILY: 1
+            CURRENT_PROJECT_VERSION: "1"
+            SWIFT_VERSION: "5.5"
+            PRODUCT_NAME: WeatherApp
+            PRODUCT_BUNDLE_IDENTIFIER: com.Nesterova.WeatherApp
+        configs:
+            Debug:
+                CODE_SIGN_IDENTITY: iPhone Developer
+                PROVISIONING_PROFILE_SPECIFIER:
+            Release:
+                CODE_SIGN_IDENTITY: iPhone Distribution
+                PROVISIONING_PROFILE_SPECIFIER:
+    info:
+      path: WeatherApp/Configs/Info.plist
+      properties:
+        UILaunchStoryboardName: LaunchScreen
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+        CFBundleDisplayName: $(BUNDLE_DISPLAY_NAME)
+        UIApplicationSupportsIndirectInputEvents: true
+        CFBundlePackageType: $(PRODUCT_BUNDLE_PACKAGE_TYPE)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        LSRequiresIPhoneOS: true
+        NSCameraUsageDescription:
+        NSUserTrackingUsageDescription:
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+          UISceneConfigurations:
+            UIWindowSceneSessionRoleApplication:
+              - UISceneConfigurationName: Default Configuration
+                UISceneDelegateClassName: $(PRODUCT_MODULE_NAME).SceneDelegate
+        INSTANCE: $(INSTANCE)
+        APP_DISPLAY_NAME: $(APP_DISPLAY_NAME)
+        CFBundleURLTypes:
+          - CFBundleTypeRole: Editor
+            CFBundleURLSchemes: [template]
+        BASE_URL: $(BASE_URL)
+        WEATHER_API_KEY: $(WEATHER_API_KEY)
+    configFiles:
+      Debug: WeatherApp/Configs/dev.xcconfig
+      Release: WeatherApp/Configs/dev.xcconfig
