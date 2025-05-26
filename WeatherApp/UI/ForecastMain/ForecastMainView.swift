@@ -16,5 +16,5 @@ struct ForecastMainView: View {
 }
 
 #Preview {
-    ForecastMainView(viewModel: ForecastMainViewModel())
+    ForecastMainView(viewModel: ForecastMainViewModel(weatherRepository: WeatherRepository()))
 }

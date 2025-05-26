@@ -8,5 +8,9 @@
 import Foundation
 
 final class ForecastMainViewModel: ObservableObject {
-    init() { }
+    private let weatherRepository: WeatherRepository
+    
+    init(weatherRepository: WeatherRepository) {
+        self.weatherRepository = weatherRepository
+    }
 }

@@ -60,3 +60,14 @@ targets:
     configFiles:
       Debug: WeatherApp/Configs/dev.xcconfig
       Release: WeatherApp/Configs/dev.xcconfig
+    dependencies:
+      - package: Moya
+      - package: Kingfisher
+      
+packages:
+  Moya:
+    url: https://github.com/Moya/Moya.git
+    exactVersion: 15.0.3
+  Kingfisher:
+    url: https://github.com/onevcat/Kingfisher.git
+    exactVersion: 8.2.0
