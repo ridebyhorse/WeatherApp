@@ -1,0 +1,30 @@
+//
+//  FutureForecastModel.swift
+//  WeatherApp
+//
+//  Created by Maria Nesterova on 26.05.2025.
+//
+
+struct FutureForecastModel: Decodable {
+    let date: Double
+    let day: FutureForecastDayModel
+    
+    enum CodingKeys: String, CodingKey {
+        case date = "date_epoch"
+        case day
+    }
+}
+
+struct FutureForecastDayModel: Decodable {
+    let averageTemperature: Double
+    let maxWindKmPerHour: Double
+    let averageHumidity: Double
+    let condition: ConditionModel
+    
+    enum CodingKeys: String, CodingKey {
+        case averageTemperature = "avgtemp_c"
+        case maxWindKmPerHour = "maxwind_kph"
+        case averageHumidity = "avghumidity"
+        case condition
+    }
+}
