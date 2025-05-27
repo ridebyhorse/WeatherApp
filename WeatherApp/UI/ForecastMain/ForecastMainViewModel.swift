@@ -20,53 +20,68 @@ final class ForecastMainViewModel: ObservableObject {
     @Published var weeklyForecastViewItems: [WeatherForecastViewItem] = []
     @Published var isLocationAlertShown = false
     
-    var currentLocation = "Moscow"
+    var currentLocation = ""
     
     private let weatherRepository: WeatherRepository
+    private let locationService: LocationService
     
-    init(weatherRepository: WeatherRepository) {
+    init(weatherRepository: WeatherRepository, locationService: LocationService) {
         self.weatherRepository = weatherRepository
-    }
-    
-    func handleFirstAppear() {
-        Task { await getForecast(city: currentLocation) }
-    }
-    
-    func handleRetryButtonTap() {
-        Task { await getForecast(city: currentLocation) }
-    }
-    
-    func handleSearchButtonTap() {
-        Task { await searchLocation(search: searchLocationText) }
-    }
-    
-    @MainActor
-    private func getForecast(city: String, days: Int = 7) async {
-        viewState = .loading
+        self.locationService = locationService
         
-        do {
-            let forecast = try await weatherRepository.getForecast(city: city, days: days)
-            mapToWeatherForecastViewItem(forecast)
-            viewState = .content
-        } catch {
-            viewState = .error
+        if locationService.isAuthorizationNotDetermined {
+            locationService.requestLocation()
+        }
+        
+        locationService.onLocationUpdateAction = { [weak self] (lat, lon) in
+            self?.searchLocation(search: "\(lat), \(lon)")
+        }
+        
+        if locationService.isAuthorized, let geoPosition = locationService.geoPosition {
+            searchLocation(search: "\(geoPosition.0), \(geoPosition.1)")
+        } else {
+            currentLocation = "Moscow"
+            getForecast(city: currentLocation)
         }
     }
     
-    @MainActor
-    private func searchLocation(search: String) async {
+    func handleRetryButtonTap() {
+        getForecast(city: currentLocation)
+    }
+    
+    func handleSearchButtonTap() {
+        searchLocation(search: searchLocationText)
+    }
+    
+    private func getForecast(city: String, days: Int = 7) {
+        viewState = .loading
+        
+        Task { @MainActor in
+            do {
+                let forecast = try await weatherRepository.getForecast(city: city, days: days)
+                mapToWeatherForecastViewItem(forecast)
+                viewState = .content
+            } catch {
+                viewState = .error
+            }
+        }
+    }
+    
+    private func searchLocation(search: String) {
         searchLocationText = ""
         
-        do {
-            let location = try await weatherRepository.searchCity(city: search)
-            if let searchedLocation = location.first?.name {
-                currentLocation = searchedLocation
-                await getForecast(city: currentLocation)
-            } else {
+        Task { @MainActor in
+            do {
+                let location = try await weatherRepository.searchCity(city: search)
+                if let searchedLocation = location.first?.name {
+                    currentLocation = searchedLocation
+                    getForecast(city: currentLocation)
+                } else {
+                    isLocationAlertShown = true
+                }
+            } catch {
                 isLocationAlertShown = true
             }
-        } catch {
-            isLocationAlertShown = true
         }
     }
     

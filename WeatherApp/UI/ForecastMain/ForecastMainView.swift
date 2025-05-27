@@ -57,7 +57,6 @@ struct ForecastMainView: View {
                 .padding(16)
             }
         }
-        .onFirstAppear { viewModel.handleFirstAppear() }
         .alert(isPresented: $viewModel.isLocationAlertShown) {
             Alert(
                 title: Text("Location Not Found"),
@@ -231,5 +230,10 @@ private struct ErrorStateView: View {
 }
 
 #Preview {
-    ForecastMainView(viewModel: ForecastMainViewModel(weatherRepository: WeatherRepository()))
+    ForecastMainView(
+        viewModel: ForecastMainViewModel(
+            weatherRepository: WeatherRepository(),
+            locationService: LocationService.shared
+        )
+    )
 }
