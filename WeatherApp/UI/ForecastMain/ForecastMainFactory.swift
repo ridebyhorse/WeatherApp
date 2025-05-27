@@ -8,7 +8,8 @@
 enum ForecastMainFactory {
     static func createForecastMainController() -> ForecastMainController {
         let weatherRepository = WeatherRepository()
-        let viewModel = ForecastMainViewModel(weatherRepository: weatherRepository)
+        let locationService = LocationService.shared
+        let viewModel = ForecastMainViewModel(weatherRepository: weatherRepository, locationService: locationService)
         let controller = ForecastMainController(viewModel: viewModel)
         
         return controller

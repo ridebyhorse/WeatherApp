@@ -42,8 +42,7 @@ targets:
         CFBundlePackageType: $(PRODUCT_BUNDLE_PACKAGE_TYPE)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         LSRequiresIPhoneOS: true
-        NSCameraUsageDescription:
-        NSUserTrackingUsageDescription:
+        NSLocationWhenInUseUsageDescription: "Allow the app to use your location to find current forecast near you"
         UIApplicationSceneManifest:
           UIApplicationSupportsMultipleScenes: false
           UISceneConfigurations:
