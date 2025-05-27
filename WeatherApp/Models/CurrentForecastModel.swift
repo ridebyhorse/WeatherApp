@@ -9,7 +9,6 @@ struct CurrentForecastModel: Decodable {
     let temperature: Double
     let condition: ConditionModel
     let windKmPerHour: Double
-    let windDirection: String
     let humidity: Double
     let feelsLike: Double
     
@@ -17,7 +16,6 @@ struct CurrentForecastModel: Decodable {
         case condition, humidity
         case temperature = "temp_c"
         case windKmPerHour = "wind_kph"
-        case windDirection = "wind_dir"
         case feelsLike = "feelslike_c"
     }
 }
