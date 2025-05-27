@@ -18,3 +18,8 @@ struct ForecastDayModel: Decodable {
         case forecastDay = "forecastday"
     }
 }
+
+struct LocationModel: Decodable {
+    let name: String
+    let country: String
+}
