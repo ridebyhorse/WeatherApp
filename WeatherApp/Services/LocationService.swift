@@ -56,4 +56,3 @@ final class LocationService: NSObject, CLLocationManagerDelegate {
         return (location.latitude, location.longitude)
     }
 }
-

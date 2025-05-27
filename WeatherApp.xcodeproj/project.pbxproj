@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -16,7 +16,6 @@
 		36E5060540D1A860BBDB10D2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FE252DFEF48012D0838512 /* AppDelegate.swift */; };
 		3C058C587A807945883F1497 /* ForecastMainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED56BA367F55AAB8E794424 /* ForecastMainViewModel.swift */; };
 		766D5F121864FB1FE1E8F4B5 /* LoadingViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117F291FFB65C03056FAF3C2 /* LoadingViewModifier.swift */; };
-		77039DAA1D02C9400365E88B /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = A7776EA2346695386898C742 /* Kingfisher */; };
 		7A53C581732564AEA8D7114E /* Environments.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DDDBC9DCE59A8E7230EBDA /* Environments.swift */; };
 		9841B5C08DF4A7CC5B922B23 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 723717BE7FFEC7CF6579FA40 /* Moya */; };
 		9AAD765F831F94DB67D7A7D4 /* ForecastMainFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07121390E97688D58678A78D /* ForecastMainFactory.swift */; };
@@ -35,7 +34,7 @@
 		02D068532C4EFD3B6F1983A5 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		07121390E97688D58678A78D /* ForecastMainFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastMainFactory.swift; sourceTree = "<group>"; };
 		117F291FFB65C03056FAF3C2 /* LoadingViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewModifier.swift; sourceTree = "<group>"; };
-		25BC59F755991BBB3351FCD6 /* WeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		25BC59F755991BBB3351FCD6 /* WeatherApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = WeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A30D0E626626A3DA3DED2C0 /* LocationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationBarView.swift; sourceTree = "<group>"; };
 		5156D50DAD848C5DBE26D1B5 /* WeatherApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherApi.swift; sourceTree = "<group>"; };
 		5332AE06F6C523FF77C45BBA /* CurrentForecastModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentForecastModel.swift; sourceTree = "<group>"; };
@@ -63,7 +62,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9841B5C08DF4A7CC5B922B23 /* Moya in Frameworks */,
-				77039DAA1D02C9400365E88B /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -221,7 +219,6 @@
 			name = WeatherApp;
 			packageProductDependencies = (
 				723717BE7FFEC7CF6579FA40 /* Moya */,
-				A7776EA2346695386898C742 /* Kingfisher */,
 			);
 			productName = WeatherApp;
 			productReference = 25BC59F755991BBB3351FCD6 /* WeatherApp.app */;
@@ -235,6 +232,8 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+				};
 			};
 			buildConfigurationList = 2AE132A3D809B71E5F58BDF0 /* Build configuration list for PBXProject "WeatherApp" */;
 			compatibilityVersion = "Xcode 14.0";
@@ -246,7 +245,6 @@
 			);
 			mainGroup = 9E139DD5F01C9D68C4B04E30;
 			packageReferences = (
-				F6027355D1DF3B09921B2B4D /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				350A2E24065F27DD21002029 /* XCRemoteSwiftPackageReference "Moya" */,
 			);
 			projectDirPath = "";
@@ -502,14 +500,6 @@
 				version = 15.0.3;
 			};
 		};
-		F6027355D1DF3B09921B2B4D /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
-			requirement = {
-				kind = exactVersion;
-				version = 8.2.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -517,11 +507,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 350A2E24065F27DD21002029 /* XCRemoteSwiftPackageReference "Moya" */;
 			productName = Moya;
-		};
-		A7776EA2346695386898C742 /* Kingfisher */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F6027355D1DF3B09921B2B4D /* XCRemoteSwiftPackageReference "Kingfisher" */;
-			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

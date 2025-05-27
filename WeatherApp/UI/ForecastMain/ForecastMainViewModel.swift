@@ -33,7 +33,7 @@ final class ForecastMainViewModel: ObservableObject {
             locationService.requestLocation()
         }
         
-        locationService.onLocationUpdateAction = { [weak self] (lat, lon) in
+        locationService.onLocationUpdateAction = { [weak self] lat, lon in
             self?.searchLocation(search: "\(lat), \(lon)")
         }
         
