@@ -9,6 +9,8 @@ import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
+    
+    private let networkService = NetworkService()
 
     func scene(
         _ scene: UIScene,
@@ -22,7 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         window?.makeKeyAndVisible()
         
-        let rootViewController = ForecastMainFactory.createForecastMainController()
+        let rootViewController = ForecastMainFactory.createForecastMainController(networkService: networkService)
         
         window?.rootViewController = rootViewController
     }

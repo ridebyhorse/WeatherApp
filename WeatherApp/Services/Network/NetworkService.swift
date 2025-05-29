@@ -8,9 +8,7 @@
 import Foundation
 import Moya
 
-final class NetworkService {
-    static let shared = NetworkService()
-    
+actor NetworkService {
     private let provider = MoyaProvider<MultiTarget>(plugins: [NetworkLoggerPlugin()])
         
     func request<T: TargetType, Response: Decodable>(_ target: T) async throws -> Response {

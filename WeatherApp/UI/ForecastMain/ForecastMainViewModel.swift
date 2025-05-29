@@ -7,6 +7,7 @@
 
 import Foundation
 
+@MainActor
 final class ForecastMainViewModel: ObservableObject {
     enum ViewState {
         case loading
@@ -56,7 +57,7 @@ final class ForecastMainViewModel: ObservableObject {
     private func getForecast(city: String, days: Int = 7) {
         viewState = .loading
         
-        Task { @MainActor in
+        Task {
             do {
                 let forecast = try await weatherRepository.getForecast(city: city, days: days)
                 mapToWeatherForecastViewItem(forecast)
@@ -70,7 +71,7 @@ final class ForecastMainViewModel: ObservableObject {
     private func searchLocation(search: String) {
         searchLocationText = ""
         
-        Task { @MainActor in
+        Task {
             do {
                 let location = try await weatherRepository.searchCity(city: search)
                 if let searchedLocation = location.first?.name {
