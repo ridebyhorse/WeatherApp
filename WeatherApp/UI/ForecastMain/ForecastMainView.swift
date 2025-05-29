@@ -232,8 +232,8 @@ private struct ErrorStateView: View {
 #Preview {
     ForecastMainView(
         viewModel: ForecastMainViewModel(
-            weatherRepository: WeatherRepository(),
-            locationService: LocationService.shared
+            weatherRepository: WeatherRepository(networkService: NetworkService()),
+            locationService: LocationService()
         )
     )
 }

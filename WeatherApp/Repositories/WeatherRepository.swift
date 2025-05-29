@@ -7,8 +7,12 @@
 
 import Foundation
 
-final class WeatherRepository {
-    private let networkService = NetworkService.shared
+final class WeatherRepository: Sendable {
+    private let networkService: NetworkService
+    
+    init(networkService: NetworkService) {
+        self.networkService = networkService
+    }
     
     func getForecast(city: String, days: Int) async throws -> ForecastModel {
         return try await networkService.request(WeatherApi.getForecast(city: city, days: days))

@@ -8,8 +8,6 @@
 import CoreLocation
 
 final class LocationService: NSObject, CLLocationManagerDelegate {
-    static let shared = LocationService()
-    
     var isAuthorized: Bool { getIsAuthorized() }
     var isAuthorizationNotDetermined: Bool { locationManager.authorizationStatus == .notDetermined }
     
@@ -18,7 +16,7 @@ final class LocationService: NSObject, CLLocationManagerDelegate {
     
     private let locationManager = CLLocationManager()
     
-    private override init() {
+    override init() {
         super.init()
         
         locationManager.delegate = self
