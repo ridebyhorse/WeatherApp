@@ -11,7 +11,8 @@ struct LocationBarView: View {
     @Binding var searchText: String
     
     let currentLocation: String
-    let onSearchTapAction: () -> Void
+    let onSearchTapAction: (String) -> Void
+    let searchedLocations: [String]
     
     @State private var isSearchActive = false
     
@@ -36,7 +37,7 @@ struct LocationBarView: View {
                             .submitLabel(.search)
                             .onSubmit {
                                 isSearchActive = false
-                                onSearchTapAction()
+                                onSearchTapAction(searchText)
                             }
                         Button {
                             isSearchActive = false
@@ -55,6 +56,29 @@ struct LocationBarView: View {
             .padding(12)
             .background(Color.blue.opacity(0.5))
             .cornerRadius(10)
+            if isSearchActive, searchedLocations.isEmpty == false {
+                VStack(alignment: .leading, spacing: 8) {
+                    ForEach(searchedLocations, id: \.self) { location in
+                        Button {
+                            searchText = location
+                            isSearchActive = false
+                            onSearchTapAction(searchText)
+                        } label: {
+                            Text(location)
+                                .foregroundColor(.white)
+                                .padding(.vertical, 4)
+                                .padding(.horizontal, 8)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .background(Color.blue.opacity(0.2))
+                                .cornerRadius(5)
+                        }
+                    }
+                }
+                .padding(.horizontal, 12)
+                .padding(.vertical, 8)
+                .background(Color.blue.opacity(0.5))
+                .cornerRadius(10)
+            }
         }
     }
 }
@@ -63,6 +87,7 @@ struct LocationBarView: View {
     LocationBarView(
         searchText: .constant("Moscow"),
         currentLocation: "Paris",
-        onSearchTapAction: { print("Search tapped") }
+        onSearchTapAction: { _ in print("Search tapped") },
+        searchedLocations: ["New York", "London", "Tokyo"]
     )
 }

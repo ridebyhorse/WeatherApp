@@ -19,9 +19,13 @@ final class ForecastMainViewModel: ObservableObject {
     @Published var searchLocationText = ""
     @Published var currentForecastViewItem: WeatherForecastViewItem?
     @Published var weeklyForecastViewItems: [WeatherForecastViewItem] = []
+    @Published var searchedLocations: [String] = []
     @Published var isLocationAlertShown = false
     
     var currentLocation = ""
+    
+    private var autosearchTask: Task<Void, Never>?
+    private var searchTask: Task<Void, Never>?
     
     private let weatherRepository: WeatherRepository
     private let locationService: LocationService
@@ -35,11 +39,11 @@ final class ForecastMainViewModel: ObservableObject {
         }
         
         locationService.onLocationUpdateAction = { [weak self] lat, lon in
-            self?.searchLocation(search: "\(lat), \(lon)")
+            self?.searchLocation(search: "\(lat), \(lon)", isAutoSearch: false)
         }
         
         if locationService.isAuthorized, let geoPosition = locationService.geoPosition {
-            searchLocation(search: "\(geoPosition.0), \(geoPosition.1)")
+            searchLocation(search: "\(geoPosition.0), \(geoPosition.1)", isAutoSearch: false)
         } else {
             currentLocation = "Moscow"
             getForecast(city: currentLocation)
@@ -50,8 +54,12 @@ final class ForecastMainViewModel: ObservableObject {
         getForecast(city: currentLocation)
     }
     
-    func handleSearchButtonTap() {
-        searchLocation(search: searchLocationText)
+    func handleSearchLocation(text: String, isAutoSearch: Bool) {
+        guard searchLocationText.isEmpty == false else {
+            return
+        }
+        
+        searchLocation(search: searchLocationText, isAutoSearch: isAutoSearch)
     }
     
     private func getForecast(city: String, days: Int = 7) {
@@ -68,21 +76,39 @@ final class ForecastMainViewModel: ObservableObject {
         }
     }
     
-    private func searchLocation(search: String) {
-        searchLocationText = ""
-        
-        Task {
-            do {
-                let location = try await weatherRepository.searchCity(city: search)
-                if let searchedLocation = location.first?.name {
-                    currentLocation = searchedLocation
-                    getForecast(city: currentLocation)
-                } else {
+    private func searchLocation(search: String, isAutoSearch: Bool) {
+        if isAutoSearch {
+            autosearchTask?.cancel()
+            autosearchTask = Task {
+                do {
+                    let location = try await weatherRepository.searchCity(city: search)
+                    searchedLocations = Array(Set(location.map { $0.name })).sorted()
+                } catch {
+                    isLocationAlertShown = true
+                    self.searchLocationText = ""
+                    searchedLocations = []
+                }
+            }
+        } else {
+            searchTask?.cancel()
+            autosearchTask?.cancel()
+            
+            searchTask = Task {
+                do {
+                    let location = try await weatherRepository.searchCity(city: search)
+                    if isAutoSearch == false, let searchedLocation = location.first?.name {
+                        currentLocation = searchedLocation
+                        getForecast(city: currentLocation)
+                    } else {
+                        isLocationAlertShown = true
+                    }
+                } catch {
                     isLocationAlertShown = true
                 }
-            } catch {
-                isLocationAlertShown = true
             }
+            
+            searchLocationText = ""
+            searchedLocations = []
         }
     }
     
