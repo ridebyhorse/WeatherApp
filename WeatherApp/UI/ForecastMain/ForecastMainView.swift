@@ -41,8 +41,12 @@ struct ForecastMainView: View {
                     LocationBarView(
                         searchText: $viewModel.searchLocationText,
                         currentLocation: viewModel.currentLocation,
-                        onSearchTapAction: { viewModel.handleSearchButtonTap() }
+                        onSearchTapAction: { viewModel.handleSearchLocation(text: $0, isAutoSearch: false) },
+                        searchedLocations: viewModel.searchedLocations
                     )
+                    .onDebouncedTextChange(text: viewModel.$searchLocationText) { text in
+                        viewModel.handleSearchLocation(text: text, isAutoSearch: true)
+                    }
                     VStack(spacing: 20) {
                         if let currentForecast = viewModel.currentForecastViewItem {
                             CurrentDayForecastView(forecastViewItem: currentForecast)
